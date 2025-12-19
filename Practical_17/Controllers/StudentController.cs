@@ -22,7 +22,7 @@ namespace Practical_17.Controllers
         public async Task<IActionResult> Index()
         {
             var students = await _httpClient.GetFromJsonAsync<List<Students>>("/api/StudentAPI");
-            var studentVMs = _mapper.Map<List<StudentViewModel>>(students);
+            var studentVMs = _mapper.Map<List<StudentListViewModel>>(students);
             return View(studentVMs);
         }
 
@@ -44,8 +44,9 @@ namespace Practical_17.Controllers
                 TempData["SuccessMessage"] = "Student created successfully.";
                 return RedirectToAction("Index");
             }
+            var studentVMs = _mapper.Map<StudentCreateViewModel>(student);
 
-            return View(student);
+            return View(studentVMs);
         }
 
 
@@ -57,8 +58,9 @@ namespace Practical_17.Controllers
 
             if (student == null)
                 return RedirectToAction("Index");
+            var studentVMs = _mapper.Map<StudentEditViewModel>(student);
 
-            return View(student);
+            return View(studentVMs);
         }
 
         [HttpPost]
@@ -72,8 +74,9 @@ namespace Practical_17.Controllers
                 TempData["SuccessMessage"] = "Student updated successfully.";
                 return RedirectToAction("Index");
             }
+            var studentVMs = _mapper.Map<StudentEditViewModel>(student);
 
-            return View(student);
+            return View(studentVMs);
         }
 
 
@@ -82,8 +85,9 @@ namespace Practical_17.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var student = await _httpClient.GetFromJsonAsync<Students>($"api/StudentAPI/{id}");
+            var studentVMs = _mapper.Map<StudentDetailsViewModel>(student);
 
-            return View(student);
+            return View(studentVMs);
         }
 
         [HttpGet]
@@ -91,8 +95,8 @@ namespace Practical_17.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var student = await _httpClient.GetFromJsonAsync<Students>($"api/StudentAPI/{id}");
-
-            return View(student);
+            var studentVMs = _mapper.Map<StudentDeleteViewModel>(student);
+            return View(studentVMs);
         }
 
         [HttpPost]

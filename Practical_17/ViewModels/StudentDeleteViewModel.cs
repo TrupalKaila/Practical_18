@@ -2,7 +2,7 @@
 
 namespace Practical_17.ViewModels
 {
-    public class StudentViewModel
+    public class StudentDeleteViewModel
     {
         public int StudentId { get; set; }
 
